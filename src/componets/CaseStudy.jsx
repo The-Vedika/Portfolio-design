@@ -47,7 +47,7 @@ const caseStudiesData = {
     badge: "Learning Project",
     title: "Krypto — NFT Landing Page",
     summary: "Reverse-engineering an existing interface to master visual hierarchy, layout systems, and typography.",
-    heroImage: "https://images.unsplash.com/photo-1620321023374-d1a68fbc720d?auto=format&fit=crop&w=1600&q=80", // Dark abstract crypto placeholder
+    heroImage: "https://res.cloudinary.com/dp5iixm06/image/upload/v1780953482/ChatGPT_Image_Jun_9_2026_02_41_39_AM_glb1im.png", // Dark abstract crypto placeholder
     meta: { role: "Visual Design", timeline: "~2 Hours", platform: "Figma" },
     overview: "Krypto is a recreated NFT marketplace landing page that I built as part of my UI learning process. The goal of this project was not to design from scratch, but to reverse-engineer an existing interface to better understand visual hierarchy, layout systems, and typography.",
     overviewDetails: "Rather than passively watching tutorials, I actively rebuilt the interface to learn by doing. *Note: This is a recreated project for learning purposes only. The original design inspiration belongs to its respective creators.*",
@@ -64,8 +64,9 @@ const caseStudiesData = {
     explorationTitle: "The Approach: Deconstruction",
     explorationText: "I broke the design into three clear phases. First, Layout Deconstruction: separating the Hero, Features, Testimonials, and Footer to see how content grouping guides attention. Second, Grid Systems: focusing on consistent horizontal alignment and balanced padding. Third, Typography: replicating heading scales and font weights to see how type alone defines importance.",
     explorationImages: [
-      "https://images.unsplash.com/photo-1639762681485-074b7f4aec63?auto=format&fit=crop&w=800&q=80", // Crypto UI placeholder
-      "https://images.unsplash.com/photo-1642543492481-44e81e3914a7?auto=format&fit=crop&w=800&q=80"  // Grid/Layout placeholder
+      "https://res.cloudinary.com/dp5iixm06/image/upload/v1780953494/Gemini_Generated_Image_m5wsj4m5wsj4m5ws_kgccea.png",// Crypto UI placeholder
+      "https://res.cloudinary.com/dp5iixm06/image/upload/v1780954461/wireframe_1_laabow.webp"  // Grid/Layout placeholder
+      
     ],
     decisionsTitle: "Key Learnings & Observations",
     decisions: [
@@ -76,8 +77,8 @@ const caseStudiesData = {
     ],
     learnings: "This project strengthened my foundation in layout systems, visual hierarchy, and typography scaling. More importantly, it successfully shifted my approach from just 'designing' to critically analyzing the decisions behind the design.",
     finalImages: [
-      "https://images.unsplash.com/photo-1614680376593-902f74cf0d41?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1622630998477-20b41cd743dc?auto=format&fit=crop&w=800&q=80"
+      "https://images.unsplash.com/photo-1642543492481-44e81e3914a7?auto=format&fit=crop&w=800&q=80",
+      "https://res.cloudinary.com/dp5iixm06/image/upload/v1780954825/ChatGPT_Image_Jun_9_2026_03_10_07_AM_k4ujqf.png"
     ]
   }
 };

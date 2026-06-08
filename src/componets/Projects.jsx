@@ -16,7 +16,7 @@ const Projects = () => {
       title: "Krypto NFT Landing Page",
       tag: "UI Recreation",
       // A dark, abstract/neon placeholder fitting for Crypto/NFTs
-      image: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=800&q=80",
+      image: "https://res.cloudinary.com/dp5iixm06/image/upload/v1780953665/Gemini_Generated_Image_jk05qjk05qjk05qj_wob1uq.png",
       // A Web3-inspired purple/pink gradient
       bgGradient: "from-fuchsia-900/40 via-purple-950/20 to-transparent",
     }
