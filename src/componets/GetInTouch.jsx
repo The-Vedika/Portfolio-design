@@ -43,7 +43,7 @@ const GetInTouch = () => {
       <div className="flex flex-col items-center mb-12 text-center relative z-10">
         <div className="w-28 h-28 rounded-full overflow-hidden mb-5 border border-white/10 relative bg-[#0a0a0a] shadow-[0_0_30px_rgba(34,197,94,0.15)] p-1">
           <img 
-            src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=256&q=80" 
+            src="https://res.cloudinary.com/dp5iixm06/image/upload/v1780948803/11-11-03_ksyvtf.jpg" 
             alt="Vedika Basotia"
             className="w-full h-full object-cover rounded-full grayscale hover:grayscale-0 transition-all duration-500"
           />
