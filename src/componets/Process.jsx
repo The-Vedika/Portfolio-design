@@ -24,26 +24,20 @@ const Process = () => {
     }
   ];
 
-  // --- DYNAMIC SEQUENTIAL ANIMATION MATH ---
-  // We calculate this dynamically so if you ever add a 5th or 6th step, 
-  // the math automatically updates and the line keeps flowing perfectly!
-  const numLines = steps.length - 1; // 3 connecting lines
-  const timePerLine = 1.5; // How long it takes the glow to cross one line (seconds)
-  const totalDuration = numLines * timePerLine; // Total animation cycle (4.5 seconds)
-  
-  // The percentage of the animation where the glow is actively moving across a single line
-  const activePercentage = (100 / numLines).toFixed(2); 
-
   return (
-    <section id="process" className="py-20 border-t border-white/5">
+    <section id="process" className="py-20 border-t border-white/5 overflow-hidden">
       
       {/* INJECTED CUSTOM KEYFRAMES */}
       <style>
         {`
-          @keyframes sequential-flow {
+          /* Sweeps exactly from one edge to the other */
+          @keyframes sweep-x {
             0% { transform: translateX(-100%); }
-            ${activePercentage}% { transform: translateX(100%); }
             100% { transform: translateX(100%); }
+          }
+          @keyframes sweep-y {
+            0% { transform: translateY(-100%); }
+            100% { transform: translateY(100%); }
           }
         `}
       </style>
@@ -58,46 +52,62 @@ const Process = () => {
         </p>
       </div>
 
-      {/* TIMELINE GRID */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-10 md:gap-6">
+      {/* TIMELINE CONTAINER */}
+      <div className="flex flex-col md:grid md:grid-cols-4 gap-0 md:gap-6">
+        
         {steps.map((step, index) => (
-          <div key={index} className="relative z-10 group">
+          <div key={index} className="relative z-10 group flex flex-row md:flex-col gap-6 md:gap-0 pb-12 md:pb-0">
             
-            {/* --- THE SEQUENTIAL CONNECTING LINE --- */}
-            {index < numLines && (
-              <div className="hidden md:block absolute top-6 left-12 w-[calc(100%-1.5rem)] h-[2px] bg-white/5 z-[-1] overflow-hidden">
-                {/* The Glowing Gradient:
-                    We use inline styles here to perfectly stagger the animation delay 
-                    based on the index of the line (0s, 1.5s, 3.0s).
-                */}
+            {/* --- DESKTOP HORIZONTAL LINE --- */}
+            {/* Runs strictly from center of this node to center of next node */}
+            {index < steps.length - 1 && (
+              <div className="hidden md:block absolute top-6 left-6 w-[calc(100%+1.5rem)] h-[2px] bg-white/5 z-[-1] overflow-hidden">
                 <div 
                   className="w-full h-full bg-gradient-to-r from-transparent via-green-400 to-transparent"
                   style={{
-                    animation: `sequential-flow ${totalDuration}s linear infinite`,
-                    animationDelay: `${index * timePerLine}s`,
-                    animationFillMode: 'both' // Ensures the glow stays hidden while waiting its turn
+                    animation: `sweep-x 2s ease-in-out infinite`,
+                    animationDelay: `${index * 0.4}s` // Cascading delay
                   }}
                 ></div>
               </div>
             )}
 
-            {/* Numbered Box */}
-            <div className="w-12 h-12 rounded-xl border border-white/20 bg-[#050505] flex items-center justify-center text-white font-medium text-lg mb-6 group-hover:border-green-500/50 group-hover:text-green-400 group-hover:bg-[#0a0a0a] group-hover:shadow-[0_0_15px_rgba(34,197,94,0.15)] transition-all duration-300 relative z-10">
-              {step.number}
+            {/* --- MOBILE VERTICAL LINE --- */}
+            {/* Runs perfectly down the left side, hiding exactly behind the boxes */}
+            {index < steps.length - 1 && (
+              <div className="block md:hidden absolute top-6 left-6 w-[2px] h-full bg-white/5 z-[-1] overflow-hidden">
+                <div 
+                  className="w-full h-full bg-gradient-to-b from-transparent via-green-400 to-transparent"
+                  style={{
+                    animation: `sweep-y 2s ease-in-out infinite`,
+                    animationDelay: `${index * 0.4}s` // Cascading delay
+                  }}
+                ></div>
+              </div>
+            )}
+
+            {/* NUMBER BOX */}
+            <div className="shrink-0 relative z-10">
+              {/* Opaque background ensures lines passing underneath are hidden */}
+              <div className="w-12 h-12 rounded-xl border border-white/20 bg-[#050505] flex items-center justify-center text-white font-medium text-lg md:mb-6 group-hover:border-green-500/50 group-hover:text-green-400 group-hover:bg-[#0a0a0a] group-hover:shadow-[0_0_15px_rgba(34,197,94,0.15)] transition-all duration-300">
+                {step.number}
+              </div>
             </div>
 
-            {/* Step Title */}
-            <h3 className="text-lg font-semibold text-gray-200 mb-3 group-hover:text-white transition-colors">
-              {step.title}
-            </h3>
-
-            {/* Step Description */}
-            <p className="text-sm text-gray-500 leading-relaxed pr-4">
-              {step.description}
-            </p>
+            {/* TEXT CONTENT */}
+            {/* pt-2 aligns the text perfectly with the center of the mobile box */}
+            <div className="flex flex-col pt-2 md:pt-0">
+              <h3 className="text-lg font-semibold text-gray-200 mb-3 group-hover:text-white transition-colors">
+                {step.title}
+              </h3>
+              <p className="text-sm text-gray-500 leading-relaxed pr-4 md:pr-0">
+                {step.description}
+              </p>
+            </div>
             
           </div>
         ))}
+        
       </div>
 
     </section>

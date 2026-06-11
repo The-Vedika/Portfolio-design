@@ -2,24 +2,24 @@ import React from 'react';
 
 const VideoShowcase = () => {
   const videos = [
-    {
-      id: 1,
-      title: "Product Videography",
-      category: "E-commerce Hero Video",
-      // Your new Cloudinary link is actively working here!
-      src: "https://res.cloudinary.com/dp5iixm06/video/upload/v1780945065/Premium_Smoothie_Cups-done_kqbygg.mp4", 
-    },
+    // {
+    //   id: 1,
+    //   title: "Product Videography",
+    //   category: "E-commerce Hero Video",
+    //   // Your new Cloudinary link is actively working here!
+    //   src: "https://res.cloudinary.com/dp5iixm06/video/upload/v1780945065/Premium_Smoothie_Cups-done_kqbygg.mp4", 
+    // },
     {
       id: 2,
       title: "Product Videography",
-      category: "E-commerce Hero Video",
-      src: "https://res.cloudinary.com/dp5iixm06/video/upload/v1780945053/Twist_handle_A_video-done_oatvbm.mp4", 
+      category: "E-commerce Hero Video",//Flat Smoothie cup 10sec
+      src: "https://res.cloudinary.com/dp5iixm06/video/upload/q_auto/f_auto/v1781113616/sflat_10sec_lpg3oy.mp4", 
     },
     {
       id: 3,
       title: "Product Videography",
-      category: "E-commerce Hero Video",
-      src: "https://res.cloudinary.com/dp5iixm06/video/upload/v1780945050/Black_ripple_cup_without_lid_A_vid_fblb5e.mp4", 
+      category: "E-commerce Hero Video",//Black Ripple Cup without lid
+      src: "https://res.cloudinary.com/dp5iixm06/video/upload/q_auto/f_auto/v1781113615/10sec_2_inogkm.mp4", 
     },
     {
       id: 4,
@@ -99,14 +99,14 @@ const VideoShowcase = () => {
           </div>
 
           {/* --- SET 2 (Duplicate for infinite loop) --- */}
-          <div className="flex gap-6 md:gap-8 items-center">
+          {/* <div className="flex gap-6 md:gap-8 items-center">
             {videos.map((video, index) => (
               <div 
                 key={`set2-${index}`} 
                 className="w-[85vw] md:w-[600px] lg:w-[700px] aspect-video shrink-0 bg-[#0a0a0a] border border-white/5 rounded-3xl p-2 flex flex-col group hover:bg-[#0c0c0c] hover:border-white/20 transition-all duration-500 relative"
               >
                 <div className="w-full h-full rounded-2xl overflow-hidden relative bg-[#050505]">
-                  {/* CHANGED HERE: object-cover is now object-contain */}
+                
                   <video 
                     autoPlay 
                     loop 
@@ -127,7 +127,7 @@ const VideoShowcase = () => {
                 </div>
               </div>
             ))}
-          </div>
+          </div>  */}
 
         </div>
       </div>

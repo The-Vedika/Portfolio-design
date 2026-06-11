@@ -1,23 +1,27 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { ArrowLeft, ArrowUpRight } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const AllProjects = () => {
+  // --- BUG FIX 1: Scroll to top on page load ---
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   const projects = [
     {
       id: "broadband-now",
       title: "BroadbandNow UI Design",
       tag: "Web Experience",
       image:
-        "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=80",
+        "https://res.cloudinary.com/dp5iixm06/image/upload/v1780948732/Hero_broadbandnow_sq0gjp.png",
       bgGradient: "from-blue-900/40 via-cyan-950/20 to-transparent",
     },
     {
       id: "krypto-nft",
       title: "Krypto NFT Landing Page",
       tag: "UI Recreation",
-      image:
-        "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=800&q=80",
+      image:"https://res.cloudinary.com/dp5iixm06/image/upload/v1780953665/Gemini_Generated_Image_jk05qjk05qjk05qj_wob1uq.png",
       bgGradient: "from-fuchsia-900/40 via-purple-950/20 to-transparent",
     },
   ];
@@ -42,25 +46,33 @@ const AllProjects = () => {
         `}
       </style>
 
-      {/* Top Navigation Bar */}
-      <nav className="max-w-5xl mx-auto w-full p-6 md:p-10 flex items-center relative z-20">
-        <Link
-          to="/"
-          className="flex items-center gap-2 text-gray-400 hover:text-white transition-colors duration-300 group"
-        >
-          <ArrowLeft
-            size={20}
-            className="group-hover:-translate-x-1 transition-transform duration-300"
-          />
-          <span className="text-sm font-medium">Back to Portfolio</span>
-        </Link>
+      {/* --- BUG FIX 2: Changed from 'sticky' to 'fixed', added 'left-0' --- */}
+      <nav className="fixed top-0 left-0 z-50 w-full bg-[#050505]/70 backdrop-blur-xl border-b border-white/5 transition-all duration-300">
+        <div className="max-w-5xl mx-auto w-full px-6 md:px-10 py-5 flex items-center justify-between">
+          
+          {/* Back Button */}
+          <Link to="/" className="flex items-center gap-2 text-gray-400 hover:text-white transition-colors duration-300 group">
+            <ArrowLeft size={20} className="group-hover:-translate-x-1 transition-transform duration-300" />
+            <span className="text-sm font-medium">Back to Portfolio</span>
+          </Link>
+          
+          {/* 'Scroll to top' helper */}
+          <button 
+            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} 
+            className="text-xs font-semibold uppercase tracking-widest text-gray-500 hover:text-green-400 transition-colors"
+          >
+            Top ↑
+          </button>
+          
+        </div>
       </nav>
 
       {/* Main Content Area */}
-      <main className="w-full flex-grow flex flex-col items-center">
+      {/* Added 'pt-32' here to push the content down below the new fixed header */}
+      <main className="w-full flex-grow flex flex-col items-center pt-32">
         {/* Container for Header and Grid */}
         <div className="max-w-5xl mx-auto w-full px-6 relative z-20">
-          <header className="mt-10 mb-16">
+          <header className="mb-16">
             <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-white mb-4">
               All Projects
             </h1>
@@ -123,17 +135,12 @@ const AllProjects = () => {
             <p>Others are being polished into full case studies.</p>
           </div>
 
-          {/* --- INTERACTIVE HOVER SECTION --- */}
-          {/* 'group' and 'cursor-pointer' added here to trigger the arrows on hover */}
           <div className="relative w-full py-10 flex items-center justify-center group cursor-pointer">
-            {/* The Text Layer (Background) */}
-            {/* Dark solid color, normal tracking, leading-none for exact vertical centering calculation */}
-            <h1 className="relative z-0 text-[4rem] md:text-[11rem] font-black text-White tracking-normal leading-none select-none">
+            <h1 className="relative z-0 text-[4rem] md:text-[11rem] font-black text-white tracking-normal leading-none select-none">
               stay tuned
             </h1>
 
-            {/* The Arrows Layer (Foreground) */}
-            {/* Opacity-0 by default, fades to Opacity-100 on group-hover */}
+            {/* Note: Kept your commented out arrows section exactly as you had it */}
             {/* <div className="absolute top-1/2 left-0 w-full -translate-y-1/2 flex items-center justify-center overflow-hidden z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none">
               <div className="animate-marquee-right gap-16 md:gap-24">
                 <div className="flex gap-16 md:gap-24 items-center">

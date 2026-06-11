@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 const Footer = () => {
   return (
-    <footer className="w-full border-t border-white/5 max-w-5xl mx-auto px-6 pt-20 pb-10 flex flex-col items-center relative z-20">
+    <footer id='contact' className="w-full border-t border-white/5 max-w-5xl mx-auto px-6 pt-20 pb-10 flex flex-col items-center relative z-20">
       
       {/* --- REUSED CUSTOM ANIMATION FOR GLOW --- */}
       <style>

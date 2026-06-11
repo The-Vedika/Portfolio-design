@@ -1,9 +1,12 @@
-import React from 'react';
+import React, { useEffect } from "react";
 import { ArrowLeft, ArrowRight, Mail } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { FaLinkedinIn, FaBehance, FaMedium } from 'react-icons/fa6';
 
 const GetInTouch = () => {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   const links = [
     {
       name: "Email Me",

@@ -1,6 +1,73 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { ArrowUpRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
+
+const ProjectCard = ({ project }) => {
+  const [isVisible, setIsVisible] = useState(false);
+  const cardRef = useRef(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        // threshold: 0.5 means this triggers when the card is 50% visible on screen
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+        } else {
+          // Reverts back to grayscale when it scrolls out of view
+          setIsVisible(false); 
+        }
+      },
+      { threshold: 0.5 }
+    );
+
+    if (cardRef.current) {
+      observer.observe(cardRef.current);
+    }
+
+    return () => {
+      if (cardRef.current) observer.unobserve(cardRef.current);
+    };
+  }, []);
+
+  return (
+    <Link
+      ref={cardRef}
+      to={`/case-study/${project.id}`} 
+      className="group block relative rounded-3xl bg-[#0a0a0a] border border-white/5 overflow-hidden transition-all duration-500 hover:-translate-y-2 hover:border-white/10 hover:shadow-[0_20px_40px_rgba(0,0,0,0.7)]"
+    >
+      <div className={`aspect-[4/3] w-full bg-gradient-to-br ${project.bgGradient} p-8 flex items-center justify-center overflow-hidden relative`}>
+        
+        {/* Image Container */}
+        <div className="w-full h-full rounded-2xl overflow-hidden border border-white/10 shadow-2xl transition-transform duration-500 group-hover:scale-[1.03]">
+          <img 
+            src={project.image} 
+            alt={project.title}
+            className={`w-full h-full object-cover transition-all duration-700 
+              ${isVisible ? 'grayscale-0 opacity-100' : 'grayscale opacity-80'} 
+              md:grayscale md:opacity-80 md:group-hover:grayscale-0 md:group-hover:opacity-100`}
+          />
+        </div>
+
+        {/* The Arrow Icon */}
+        <div className={`absolute top-6 right-6 w-10 h-10 rounded-full bg-black/60 border border-white/10 flex items-center justify-center text-white transition-all duration-500 backdrop-blur-md 
+          ${isVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-70'}
+          md:opacity-0 md:scale-70 md:group-hover:opacity-100 md:group-hover:scale-100`}
+        >
+          <ArrowUpRight size={18} />
+        </div>
+      </div>
+
+      <div className="p-6">
+        <span className="text-xs font-semibold uppercase tracking-widest text-gray-500 block mb-2">
+          {project.tag}
+        </span>
+        <h3 className="text-xl font-medium text-gray-200 group-hover:text-white transition-colors duration-300">
+          {project.title}
+        </h3>
+      </div>
+    </Link>
+  );
+};
 
 const Projects = () => {
   const projects = [
@@ -24,13 +91,16 @@ const Projects = () => {
 
   return (
     <section id="projects" className="py-20 border-t border-white/5">
-      <div className="flex justify-between items-end mb-12">
-        <h2 className="text-3xl font-bold tracking-tight text-white">
+      <div className="flex flex-col justify-between items-start mb-12">
+        <h2 className="text-3xl font-bold tracking-tight text-white mb-2">
           Recent Projects
         </h2>
+        <p className="text-gray-500">
+            A showcase of recent UI/UX and e-commerce design projects.
+          </p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+      {/* <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         {projects.map((project, index) => (
           <Link
             key={index}
@@ -59,6 +129,11 @@ const Projects = () => {
               </h3>
             </div>
           </Link>
+        ))}
+      </div> */} 
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        {projects.map((project, index) => (
+          <ProjectCard key={index} project={project} />
         ))}
       </div>
 

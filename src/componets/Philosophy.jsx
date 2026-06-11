@@ -1,6 +1,31 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 const Philosophy = () => {
+  const [isVisible, setIsVisible] = useState(false);
+  const imageRef = useRef(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        // Trigger the color transition when the image is 50% visible on screen
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+        } else {
+          setIsVisible(false);
+        }
+      },
+      { threshold: 0.5 }
+    );
+
+    if (imageRef.current) {
+      observer.observe(imageRef.current);
+    }
+
+    return () => {
+      if (imageRef.current) observer.unobserve(imageRef.current);
+    };
+  }, []);
+
   // Pulling from your exact skill list for the core stack pills
   const coreStack = [
     "Figma", 
@@ -13,21 +38,20 @@ const Philosophy = () => {
   ];
 
   return (
-    <section id="philosophy" className="py-20 ">
+    <section id="philosophy" className="py-20 border-t border-white/5">
       
-      {/* --- SPLIT LAYOUT GRID --- 
-          'md:grid-cols-2': Splits the section perfectly in half on desktop.
-          'gap-12 md:gap-20': Adds generous breathing room between the image and the text.
-      */}
+      {/* --- SPLIT LAYOUT GRID --- */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-20 items-center">
         
         {/* --- LEFT COLUMN: Portrait Image --- */}
-        <div className="relative w-full aspect-[4/5] rounded-3xl overflow-hidden bg-[#0a0a0a] border border-white/10 group">
-          {/* Replace this Unsplash link with your own high-quality portrait */}
+        {/* Added ref here to track when the image container enters the viewport */}
+        <div ref={imageRef} className="relative w-full aspect-[4/5] rounded-3xl overflow-hidden bg-[#0a0a0a] border border-white/10 group">
           <img 
             src="./try.jpeg" 
             alt="Vedika Portrait" 
-            className="w-full h-full object-cover grayscale opacity-90 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-700"
+            className={`w-full h-full object-cover transition-all duration-700 
+              ${isVisible ? 'grayscale-0 opacity-100' : 'grayscale opacity-90'} 
+              md:grayscale md:opacity-90 md:group-hover:grayscale-0 md:group-hover:opacity-100`}
           />
         </div>
 
@@ -64,7 +88,7 @@ const Philosophy = () => {
               {coreStack.map((skill, index) => (
                 <div 
                   key={index}
-                  className="px-4 py-2 rounded-md bg-white/5 border border-white/10 text-gray-300 text-sm hover:bg-white/10 hover:text-white transition-colors duration-300"
+                  className="px-4 py-2 rounded-md bg-white/5 border border-white/10 text-gray-300 text-sm hover:bg-white/10 hover:text-white transition-colors duration-300 cursor-default"
                 >
                   {skill}
                 </div>

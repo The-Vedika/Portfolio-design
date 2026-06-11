@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { ArrowLeft } from 'lucide-react';
 import { Link, useParams } from 'react-router-dom';
 
@@ -86,7 +86,10 @@ const caseStudiesData = {
 const CaseStudy = () => {
   const { id } = useParams();
   const data = caseStudiesData[id];
-
+    useEffect(() => {
+      window.scrollTo(0, 0);
+    }, []);
+  
   if (!data) {
     return (
       <div className="min-h-screen bg-[#050505] text-white flex flex-col items-center justify-center">
@@ -99,12 +102,32 @@ const CaseStudy = () => {
   return (
     <div className="min-h-screen bg-[#050505] text-white font-sans selection:bg-white/20 pb-32">
       
-      <nav className="w-full p-6 md:p-10 flex items-center">
+      {/* <nav className="w-full p-6 md:p-10 flex items-center">
         <Link to="/" className="flex items-center gap-2 text-gray-400 hover:text-white transition-colors duration-300 group">
           <ArrowLeft size={20} className="group-hover:-translate-x-1 transition-transform duration-300" />
           <span className="text-sm font-medium">Back to Portfolio</span>
         </Link>
-      </nav>
+      </nav> */}
+      {/* GLASSMORPHIC STICKY HEADER (Option 2) */}
+<nav className="sticky top-0 z-50 w-full bg-[#050505]/70 backdrop-blur-xl border-b border-white/5 transition-all duration-300">
+  <div className="max-w-5xl mx-auto w-full px-6 md:px-10 py-5 flex items-center justify-between">
+    
+    {/* Back Button */}
+    <Link to="/" className="flex items-center gap-2 text-gray-400 hover:text-white transition-colors duration-300 group">
+      <ArrowLeft size={20} className="group-hover:-translate-x-1 transition-transform duration-300" />
+      <span className="text-sm font-medium">Back to Portfolio</span>
+    </Link>
+    
+    {/* Optional: 'Scroll to top' helper */}
+    <button 
+      onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} 
+      className="text-xs font-semibold uppercase tracking-widest text-gray-500 hover:text-green-400 transition-colors"
+    >
+      Top ↑
+    </button>
+    
+  </div>
+</nav>
 
       <main className="max-w-4xl mx-auto px-6">
         
