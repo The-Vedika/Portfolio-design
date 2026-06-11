@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Hero from './componets/Hero';
 import Sidebar from './componets/Sidebar';
 import Projects from './componets/Projects';
@@ -11,9 +11,29 @@ import { BrowserRouter, Route, Router, Routes } from 'react-router-dom';
 import AllProjects from './componets/AllProjects';
 import GetInTouch from './componets/GetInTouch';
 import VideoShowcase from './componets/VideoShowcase';
-
+import Lenis from 'lenis';
 
 const MainPortfolio = () => {
+  useEffect(() => {
+    const lenis = new Lenis({
+      duration: 1.2, // Gives that heavy, luxurious scroll feel
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), 
+      smoothWheel: true,
+      wheelMultiplier: 1,
+      touchMultiplier: 2, // Keeps it snappy on mobile
+    });
+
+    function raf(time) {
+      lenis.raf(time);
+      requestAnimationFrame(raf);
+    }
+    requestAnimationFrame(raf);
+
+    // Cleanup on unmount
+    return () => {
+      lenis.destroy();
+    };
+  }, []);
   return (
     <div className="min-h-screen bg-[#050505] text-white font-sans selection:bg-white/20">
       <Sidebar />
