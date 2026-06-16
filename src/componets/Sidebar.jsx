@@ -34,8 +34,8 @@ const Sidebar = () => {
   return (
     <>
       {/* Mobile Top Bar */}
-      <div className="md:hidden fixed top-0 left-0 w-full bg-[#0a0a0a] border-b border-white/10 p-4 flex justify-between items-center z-50">
-        <span className="text-white font-semibold">Vedika's Portfolio</span>
+      <div className="backdrop-blur md:hidden fixed top-0 left-0 w-full bg-[#0a0a0a]/75 border-b border-white/10 p-4 flex justify-between items-center z-50">
+        <span className="text-white font-semibold">V</span>
         <button onClick={() => setIsOpen(!isOpen)} className="text-gray-300">
           {isOpen ? <X size={24} /> : <Menu size={24} />}
         </button>
