@@ -53,7 +53,7 @@ const VideoShowcase = () => {
       </style>
 
       {/* Section Header */}
-      <div className="mb-12 px-6 md:px-16 w-full max-w-5xl mx-auto">
+      <div className="mb-12 w-full max-w-5xl mx-auto">
         <h2 className="text-3xl font-medium text-white tracking-tight mb-2">
           Motion & E-commerce
         </h2>

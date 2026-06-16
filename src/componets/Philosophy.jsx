@@ -41,10 +41,16 @@ const Philosophy = () => {
     <section id="philosophy" className="py-20 border-t border-white/5">
       
       {/* --- SPLIT LAYOUT GRID --- */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-20 items-center">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-20 items-center">
         
         {/* --- LEFT COLUMN: Portrait Image --- */}
         {/* Added ref here to track when the image container enters the viewport */}
+        <span className="sm:hidden text-xs font-semibold tracking-[0.2em] text-gray-500 uppercase mb-2 block">
+            Philosophy
+          </span>
+          <span className="sm:hidden text-2xl md:text-3xl font-medium text-white tracking-tight leading-snug mb-8">
+            Design is the silent ambassador of your brand.
+          </span>
         <div ref={imageRef} className="relative w-full aspect-[4/5] rounded-3xl overflow-hidden bg-[#0a0a0a] border border-white/10 group">
           <img 
             src="./try.jpeg" 
@@ -59,11 +65,11 @@ const Philosophy = () => {
         <div>
           
           {/* Philosophy Header */}
-          <span className="text-xs font-semibold tracking-[0.2em] text-gray-500 uppercase mb-4 block">
+          <span className="hidden sm:block text-xs font-semibold tracking-[0.2em] text-gray-500 uppercase mb-4 block">
             Philosophy
           </span>
           
-          <h3 className="text-2xl md:text-3xl font-medium text-white tracking-tight leading-snug mb-8">
+          <h3 className="hidden sm:block text-2xl md:text-3xl font-medium text-white tracking-tight leading-snug mb-8">
             Design is the silent ambassador of your brand.
           </h3>
 

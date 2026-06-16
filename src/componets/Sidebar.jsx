@@ -16,21 +16,19 @@ const Sidebar = () => {
     { name: 'Contact', icon: <Mail size={18} />, active: false },
   ];
 
-const socialLinks = [
+  const socialLinks = [
     { 
       icon: <Mail size={18} />, 
-      href: 'mailto:vedikab25@gmail.com' // Don't forget to update your email here too!
+      href: 'mailto:vedikab25@gmail.com' 
     }, 
-        { 
+    { 
       icon: <FaLinkedinIn size={18} />, 
-      // 👇 Your actual LinkedIn link added here!
       href: 'https://www.linkedin.com/in/vedika-basotia' 
     },
     { 
       icon: <FaMedium size={18} />, 
-      href: 'https://medium.com/@vedikab25' // Update your Medium
+      href: 'https://medium.com/@vedikab25' 
     },
-
   ];
 
   return (
@@ -58,7 +56,8 @@ const socialLinks = [
             <img 
               src="./11-11-03.jpg"
               alt="Vedika"
-              className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500"
+              // CHANGED HERE: Colorful by default, grayscale and hover only on 'md:' screens
+              className="w-full h-full object-cover transition-all duration-500 grayscale-0 md:grayscale md:hover:grayscale-0"
             />
           </a>
           </div>
