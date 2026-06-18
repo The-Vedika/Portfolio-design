@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 // UI icons stay with Lucide
 import { Home, User, FolderGit2, Layers, Mail, Menu, X } from 'lucide-react';
 // Brand icons are now imported from FontAwesome 6 (fa6) inside react-icons
@@ -7,13 +7,14 @@ import { MdMarkEmailUnread } from 'react-icons/md';
 
 const Sidebar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState('home');
 
   const navLinks = [
-    { name: 'Home', icon: <Home size={18} />, active: true },
-    { name: 'Projects', icon: <FolderGit2 size={18} />, active: false },
-    { name: 'Capabilities', icon: <Layers size={18} />, active: false },
-    { name: 'Philosophy', icon: <User size={18} />, active: false },
-    { name: 'Contact', icon: <Mail size={18} />, active: false },
+    { name: 'Home', icon: <Home size={18} /> },
+    { name: 'Projects', icon: <FolderGit2 size={18} /> },
+    { name: 'Capabilities', icon: <Layers size={18} /> },
+    { name: 'Philosophy', icon: <User size={18} /> },
+    { name: 'Contact', icon: <Mail size={18} /> },
   ];
 
   const socialLinks = [
@@ -31,6 +32,45 @@ const Sidebar = () => {
     },
   ];
 
+  // --- UPDATED: Robust ScrollSpy Logic with Page-Bottom Detection ---
+  useEffect(() => {
+    const handleScroll = () => {
+      const sections = document.querySelectorAll('section, footer');
+      let current = 'home';
+
+      // 1. Detect if the user has scrolled to the absolute bottom limit of the window
+      const reachedBottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 60;
+
+      if (reachedBottom) {
+        current = 'contact';
+      } else {
+        // 2. Fall back to standard tracking calculations if not at the absolute bottom
+        sections.forEach((section) => {
+          const sectionTop = section.offsetTop;
+          const sectionId = section.getAttribute('id');
+          
+          if (window.scrollY >= sectionTop - window.innerHeight / 3) {
+            if (sectionId) {
+              // If the element is marked as the footer, route it directly to the 'contact' target
+              if (sectionId === 'footer' || section.tagName.toLowerCase() === 'footer') {
+                current = 'contact';
+              } else {
+                current = sectionId;
+              }
+            }
+          }
+        });
+      }
+
+      setActiveSection(current);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    handleScroll(); // Run immediately on mount to establish precise viewport context
+
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   return (
     <>
       {/* Mobile Top Bar */}
@@ -40,6 +80,12 @@ const Sidebar = () => {
           {isOpen ? <X size={24} /> : <Menu size={24} />}
         </button>
       </div>
+
+      {/* Blurred Backdrop Overlay for Mobile */}
+      <div 
+        className={`md:hidden fixed inset-0 bg-black/60 backdrop-blur-md z-30 transition-opacity duration-300 ${isOpen ? 'opacity-100 visible' : 'opacity-0 invisible'}`}
+        onClick={() => setIsOpen(false)}
+      ></div>
 
       {/* Desktop Sidebar & Mobile Menu Overlay */}
       <aside className={`
@@ -52,14 +98,13 @@ const Sidebar = () => {
         {/* Profile Section */}
         <div className="flex flex-col items-center mb-10">
           <div className="w-32 h-32 rounded-2xl overflow-hidden mb-4 border-2 border-white/10 relative bg-neutral-800">
-          <a href='#home'>
-            <img 
-              src="./11-11-03.jpg"
-              alt="Vedika"
-              // CHANGED HERE: Colorful by default, grayscale and hover only on 'md:' screens
-              className="w-full h-full object-cover transition-all duration-500 grayscale-0 md:grayscale md:hover:grayscale-0"
-            />
-          </a>
+            <a href='#home'>
+              <img 
+                src="./11-11-03.jpg"
+                alt="Vedika"
+                className="w-full h-full object-cover transition-all duration-500 grayscale-0 md:grayscale md:hover:grayscale-0"
+              />
+            </a>
           </div>
           
           <div className="flex items-center gap-2 bg-[#063319] text-green-400 text-xs font-medium px-4 py-1.5 rounded-full border border-green-900/50 w-full justify-center">
@@ -70,23 +115,27 @@ const Sidebar = () => {
 
         {/* Navigation Links */}
         <nav className="flex-1 space-y-2 w-full">
-          {navLinks.map((link) => (
-            <a
-              key={link.name}
-              href={`#${link.name.toLowerCase()}`}
-              onClick={() => setIsOpen(false)} 
-              className={`flex items-center gap-4 px-4 py-3 rounded-xl transition-all duration-300 text-sm font-medium
-                ${link.active 
-                  ? 'bg-[#1a1a1a] text-white' 
-                  : 'hover:bg-white/5 hover:text-white'
-                }`}
-            >
-              <span className={link.active ? 'text-white' : 'text-gray-500'}>
-                {link.icon}
-              </span>
-              {link.name}
-            </a>
-          ))}
+          {navLinks.map((link) => {
+            const isActive = activeSection === link.name.toLowerCase();
+
+            return (
+              <a
+                key={link.name}
+                href={`#${link.name.toLowerCase()}`}
+                onClick={() => setIsOpen(false)} 
+                className={`flex items-center gap-4 px-4 py-3 rounded-xl transition-all duration-300 text-sm font-medium
+                  ${isActive 
+                    ? 'bg-[#1a1a1a] text-white shadow-[inset_0_0_10px_rgba(255,255,255,0.05)]' 
+                    : 'hover:bg-white/5 hover:text-white'
+                  }`}
+              >
+                <span className={isActive ? 'text-white' : 'text-gray-500'}>
+                  {link.icon}
+                </span>
+                {link.name}
+              </a>
+            );
+          })}
         </nav>
 
         {/* Social Icons */}
@@ -95,6 +144,7 @@ const Sidebar = () => {
             <a 
               key={index} 
               href={social.href}
+              target="_blank"
               rel="noopener noreferrer"
               className="text-gray-500 hover:text-white transition-colors duration-300"
             >
