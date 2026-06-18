@@ -32,26 +32,23 @@ const Sidebar = () => {
     },
   ];
 
-  // --- UPDATED: Robust ScrollSpy Logic with Page-Bottom Detection ---
+  // ScrollSpy Logic (Tracks active section)
   useEffect(() => {
     const handleScroll = () => {
       const sections = document.querySelectorAll('section, footer');
       let current = 'home';
 
-      // 1. Detect if the user has scrolled to the absolute bottom limit of the window
       const reachedBottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 60;
 
       if (reachedBottom) {
         current = 'contact';
       } else {
-        // 2. Fall back to standard tracking calculations if not at the absolute bottom
         sections.forEach((section) => {
           const sectionTop = section.offsetTop;
           const sectionId = section.getAttribute('id');
           
           if (window.scrollY >= sectionTop - window.innerHeight / 3) {
             if (sectionId) {
-              // If the element is marked as the footer, route it directly to the 'contact' target
               if (sectionId === 'footer' || section.tagName.toLowerCase() === 'footer') {
                 current = 'contact';
               } else {
@@ -66,10 +63,28 @@ const Sidebar = () => {
     };
 
     window.addEventListener('scroll', handleScroll);
-    handleScroll(); // Run immediately on mount to establish precise viewport context
+    handleScroll();
 
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  // --- NEW: Smooth Scroll Function ---
+  const handleSmoothScroll = (e, targetId) => {
+    e.preventDefault(); // Prevents the instant 'boom' jump
+    setIsOpen(false); // Closes the mobile menu when a link is clicked
+
+    const element = document.getElementById(targetId);
+    if (element) {
+      // Calculates the exact position and scrolls smoothly
+      // The '- 60' accounts for the mobile top bar so it doesn't overlap your section titles!
+      const topOffset = element.getBoundingClientRect().top + window.scrollY - 60; 
+      
+      window.scrollTo({
+        top: topOffset,
+        behavior: "smooth"
+      });
+    }
+  };
 
   return (
     <>
@@ -122,7 +137,8 @@ const Sidebar = () => {
               <a
                 key={link.name}
                 href={`#${link.name.toLowerCase()}`}
-                onClick={() => setIsOpen(false)} 
+                // Applied the smooth scroll function here!
+                onClick={(e) => handleSmoothScroll(e, link.name.toLowerCase())} 
                 className={`flex items-center gap-4 px-4 py-3 rounded-xl transition-all duration-300 text-sm font-medium
                   ${isActive 
                     ? 'bg-[#1a1a1a] text-white shadow-[inset_0_0_10px_rgba(255,255,255,0.05)]' 
